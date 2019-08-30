@@ -1,4 +1,4 @@
-.btn, #btn-create-new-board {
+.card, #card-create-new-board {
   width: 350px;
   height: 100px;
   border: none;
@@ -10,19 +10,58 @@
   -webkit-transition: all .2s ease-in-out;
   margin-top: 50px;
   margin-left: 40px; }
-  .btn:hover, #btn-create-new-board:hover {
+  .card:hover, #card-create-new-board:hover {
     transform: scale(1.1);
     box-shadow: 2px 4px 8px gray; }
 
-#btn-create-new-board {
+#card-create-new-board {
   background-color: mediumaquamarine;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   text-shadow: 0 0 3px black; }
-  #btn-create-new-board.active {
-    height: 350px; }
-    #btn-create-new-board.active hr {
+  #card-create-new-board.active {
+    height: 350px;
+    text-align: left;
+    padding: 0; }
+    #card-create-new-board.active hr {
+      width: 100%;
+      left: 0;
       height: 0;
       border: 0;
       border-top: 1px solid white; }
+    #card-create-new-board.active h5 {
+      font-size: 12px; }
+
+input {
+  border: none;
+  border-radius: 5px;
+  width: 250px;
+  height: 40px;
+  box-shadow: 1px 3px 5px #4d4d4d;
+  padding: 0 10px; }
+
+.btn, #btn-cancel, #btn-create {
+  width: 110px;
+  height: 40px;
+  font-size: 12px;
+  background-color: transparent;
+  border: none;
+  margin: 40px 0 0 0;
+  padding: 0;
+  transition-duration: 0.5s; }
+  .btn:hover, #btn-cancel:hover, #btn-create:hover {
+    color: turquoise; }
+
+#btn-cancel {
+  color: white;
+  font-weight: bold;
+  text-shadow: 0 0 3px black; }
+
+#btn-create {
+  background-color: white;
+  box-shadow: 0 3px 3px gray;
+  color: black; }
+  #btn-create:hover {
+    background-color: lightgrey;
+    color: blue; }
