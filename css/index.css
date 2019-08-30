@@ -1,5 +1,26 @@
-#btn {
-  width: 200;
-  height: 200; }
-  #btn-create-new-board {
-    background-color: seagreen; }
+.btn, #btn-create-new-board {
+  width: 300px;
+  height: 100px;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 2px 2px 5px gray;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  transition: all .2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+  margin-top: 50px;
+  margin-left: 40px; }
+  .btn:hover, #btn-create-new-board:hover {
+    transform: scale(1.1);
+    box-shadow: 2px 4px 8px gray; }
+
+#btn-create-new-board {
+  background-color: mediumaquamarine;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  text-shadow: 0 0 3px black; }
+  #btn-create-new-board.active hr {
+    height: 0;
+    border: 0;
+    border-top: 1px solid white; }
