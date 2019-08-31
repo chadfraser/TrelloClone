@@ -38,7 +38,8 @@
       border: 0;
       border-top: 1px solid white; }
     #card-create-new-board.active h5 {
-      font-size: 12px; }
+      font-size: 14px;
+      font-weight: lighter; }
 
 input {
   border: none;
