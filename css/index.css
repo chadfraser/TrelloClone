@@ -71,7 +71,7 @@ input {
   display: flex;
   justify-content: center; }
 
-.btn, #btn-cancel, #btn-create {
+.btn, #btn-cancel, #btn-create, #new-list-input-div {
   width: 100px;
   height: 40px;
   font-size: 12px;
@@ -80,7 +80,7 @@ input {
   margin: 40px 0 0 0;
   padding: 0;
   transition-duration: 0.3s; }
-  .btn:hover, #btn-cancel:hover, #btn-create:hover {
+  .btn:hover, #btn-cancel:hover, #btn-create:hover, #new-list-input-div:hover {
     color: turquoise; }
 
 #btn-cancel {
@@ -101,13 +101,13 @@ input {
   width: 80%;
   justify-content: space-between; }
 
-.close-icon {
+.close-icon, #new-list-close-icon {
   width: 18px;
   height: 18px;
   transform: scale(1) rotate(0);
   transition: all 0.1s ease-in-out;
   transition-delay: 0.1s; }
-  .close-icon:hover {
+  .close-icon:hover, #new-list-close-icon:hover {
     transform: scale(1.25) rotate(10deg);
     transition-delay: 0s; }
 
@@ -122,6 +122,7 @@ input {
   justify-content: center;
   align-items: center;
   font-size: 32px;
+  margin-left: 45px;
   cursor: default; }
   #list-title:hover {
     transform: none;
@@ -134,3 +135,21 @@ input {
   height: 130px;
   text-shadow: none;
   font-size: 18px; }
+
+#new-list-input-div {
+  position: relative;
+  width: 320px;
+  height: 130px;
+  margin-left: 40px;
+  box-shadow: 0px 1px 3px gray; }
+  #new-list-input-div input {
+    position: relative;
+    left: 20px;
+    top: 20px; }
+
+#new-list-close-icon {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 24px;
+  height: 24px; }

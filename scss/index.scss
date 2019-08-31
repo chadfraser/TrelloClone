@@ -164,6 +164,7 @@ input {
     justify-content: center;
     align-items: center;
     font-size: 32px;
+    margin-left: 45px;
     cursor: default;
 
     &:hover {
@@ -179,6 +180,31 @@ input {
     height: 130px;
     text-shadow: none;
     font-size: 18px;
+}
+
+#new-list-input-div {
+    @extend .btn;
+    position: relative;
+    // border: 1px solid red;
+    width: 320px;
+    height: 130px;
+    margin-left: 40px;
+    box-shadow: 0px 1px 3px lighten(black, 50);
+
+    input {
+        position: relative;
+        left: 20px;
+        top: 20px;
+    }
+}
+
+#new-list-close-icon {
+    @extend .close-icon;
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 24px;
+    height: 24px;
 }
 
 // #lists {
