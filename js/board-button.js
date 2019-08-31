@@ -1,5 +1,7 @@
 // window.onload = createBoards;
 const createNewBoardCard = document.getElementById("card-create-new-board");
+const mainCardHeader = document.createElement("div"); 
+mainCardHeader.classList.add("card-header");
 const boardCreationDiv = document.createElement("div");
 const optionButtons = document.createElement("div");
 const cancelButton = document.createElement("button");
@@ -14,6 +16,21 @@ createNewBoardCard.addEventListener("click", toggleCard);
 boardCreationDiv.appendChild(namingText);
 boardCreationDiv.appendChild(inputBox);
 boardCreationDiv.appendChild(optionButtons);
+
+const closeIcon = document.createElement("img");
+closeIcon.classList.add("close-icon");
+closeIcon.src = "img/iconmonstr-x-mark.png";
+mainCardHeader.textContent = "Creating a board";
+mainCardHeader.appendChild(closeIcon);
+
+closeIcon.addEventListener("click", function(){
+    reduceCard(createNewBoardCard);
+    event.stopPropagation();
+});
+cancelButton.addEventListener("click", function(){
+    reduceCard(createNewBoardCard);
+    event.stopPropagation();
+});
 
 function initializeOptionButtons() {
     cancelButton.textContent = "CANCEL";
@@ -35,9 +52,12 @@ function toggleCard() {
 }
 
 function expandCard(card) {
-    card.textContent = "Creating a board";
+    console.log("1");
+    // card.textContent = "Creating a board";
     card.classList.add("active");
-    card.appendChild(closeIcon);
+    // card.appendChild(closeIcon);
+    card.textContent = "";
+    card.appendChild(mainCardHeader);
     card.appendChild(document.createElement("hr"));
     // card.appendChild(namingText);
     // card.appendChild(inputBox);
@@ -46,19 +66,14 @@ function expandCard(card) {
 }
 
 function reduceCard(card) {
+    console.log(card);
     card.classList.remove("active");
     while (card.firstChild) {
         card.removeChild(card.firstChild);
     }
     card.textContent = "Create a new board...";
+    console.log(card.textContent);
 }
-
-
-let closeIcon = document.createElement("span");
-closeIcon.textContent = "X";
-closeIcon.addEventListener("onclick", function(){
-
-})
 
 function createBoards() {
     // let boardsBlock = document.getElementById("boards");
