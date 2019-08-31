@@ -20,7 +20,6 @@ newListInputBox.addEventListener("focusin", hideNameInsistence);
 newListCloseIcon.addEventListener("click", replaceNewListInputDiv);
 newListInputBox.addEventListener("keydown", function() {
     if (event.key === "Enter") {
-        console.log("AAA");
         createNewList(this.value.toUpperCase(), false);
     }
 });
@@ -52,12 +51,20 @@ function createNewList(title, initializingLists) {
     newList.classList.add("list");
 
     let newListSubDiv = document.createElement("div");
+    let subDivInputBox = document.createElement("input");
     newListSubDiv.appendChild(document.createElement("hr"));
-    newListSubDiv.appendChild(document.createElement("input"));
+    newListSubDiv.appendChild(subDivInputBox);
     newListSubDiv.classList.add("list-sub-div");
+
+    subDivInputBox.addEventListener("keydown", function() {
+        if (event.key === "Enter") {
+            createNewTask(this.value, newList);
+        }
+    });
 
     listContainer.appendChild(newList);
     newList.appendChild(newListSubDiv);
+
     replaceNewListInputDiv();
 
     // if (!initializingLists) {
@@ -66,5 +73,13 @@ function createNewList(title, initializingLists) {
     //         savedBoardsString + "," + title;
     //     Cookies.set("savedBoards", savedBoardsString);
     // }
+}
 
+function createNewTask(title, mainDiv) {
+    let newTask = document.createElement("div");
+    newTask.textContent = title;
+    let checkmark = document.createElement("img");
+    checkmark.src = "img/iconmonstr-check-mark.png"
+    newTask.appendChild(checkmark);
+    mainDiv.appendChild(newTask);
 }

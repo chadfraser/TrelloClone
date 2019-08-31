@@ -222,14 +222,14 @@ input {
     cursor: pointer;
 }
 
-// #lists {
-//     width: 100%;
-//     display: block;
-//     display: grid;
-//     grid-template-columns: repeat(3, 400px);
-//     // grid-template-rows: auto;
-//     grid-row-gap: 10px;
-// }
+#lists {
+    width: 100%;
+    display: block;
+    display: grid;
+    grid-template-columns: repeat(3, 350px);
+    // grid-template-rows: auto;
+    grid-row-gap: 10px;
+}
 
 .list {
     @extend .card;
@@ -246,7 +246,7 @@ input {
 }
 
 .list-sub-div {
-    height: 50%;
+    // height: 50%;
     width: 100%;
     text-align: center;
 
@@ -257,4 +257,8 @@ input {
         height: 1px;
         border: 1px solid lightgrey;
     }
+}
+
+.task {
+    
 }

@@ -165,6 +165,13 @@ input {
   height: 24px;
   cursor: pointer; }
 
+#lists {
+  width: 100%;
+  display: block;
+  display: grid;
+  grid-template-columns: repeat(3, 350px);
+  grid-row-gap: 10px; }
+
 .list {
   width: 280px;
   height: 150px;
@@ -176,7 +183,6 @@ input {
     box-shadow: 0 2px 5px gray; }
 
 .list-sub-div {
-  height: 50%;
   width: 100%;
   text-align: center; }
   .list-sub-div hr {
