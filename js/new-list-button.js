@@ -14,12 +14,18 @@ newListInputDiv.appendChild(newListInputBox);
 newListInputDiv.appendChild(nameInsistenceText);
 
 createNewListCard.addEventListener("click", replaceNewListCard);
+newListInputBox.addEventListener("focusout", showNameInsistence);
+newListInputBox.addEventListener("focusin", hideNameInsistence);
 
 function replaceNewListCard() {
     lists.removeChild(createNewListCard);
     lists.appendChild(newListInputDiv);
 }
 
-function foo() {
+function showNameInsistence() {
+    nameInsistenceText.textContent = "give me a name!"
+}
 
+function hideNameInsistence() {
+    nameInsistenceText.textContent = "";
 }
