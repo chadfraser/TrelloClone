@@ -10,6 +10,8 @@
     -webkit-transition: all .2s ease-in-out;
     margin-top: 50px;
     margin-left: 40px;
+    user-select: none;
+    -moz-user-select: none;
 
     &:hover {
         // animation: scale 0.1s linear;

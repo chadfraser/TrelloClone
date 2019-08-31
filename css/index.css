@@ -9,7 +9,9 @@
   transition: all .2s ease-in-out;
   -webkit-transition: all .2s ease-in-out;
   margin-top: 50px;
-  margin-left: 40px; }
+  margin-left: 40px;
+  user-select: none;
+  -moz-user-select: none; }
   .card:hover, #card-create-new-board:hover {
     transform: scale(1.1);
     box-shadow: 2px 4px 8px gray; }
