@@ -25,10 +25,12 @@ mainCardHeader.appendChild(closeIcon);
 
 closeIcon.addEventListener("click", function(){
     reduceCard(createNewBoardCard);
+    inputBox.value = "";
     event.stopPropagation();
 });
 cancelButton.addEventListener("click", function(){
     reduceCard(createNewBoardCard);
+    inputBox.value = "";
     event.stopPropagation();
 });
 
@@ -46,33 +48,22 @@ function toggleCard() {
     if (!this.classList.contains("active")) {
         expandCard(this);
     }
-    // } else {
-    //     reduceCard(this);
-    // }
 }
 
 function expandCard(card) {
-    console.log("1");
-    // card.textContent = "Creating a board";
     card.classList.add("active");
-    // card.appendChild(closeIcon);
     card.textContent = "";
     card.appendChild(mainCardHeader);
     card.appendChild(document.createElement("hr"));
-    // card.appendChild(namingText);
-    // card.appendChild(inputBox);
-    // card.appendChild(optionButtons);
     card.appendChild(boardCreationDiv);
 }
 
 function reduceCard(card) {
-    console.log(card);
     card.classList.remove("active");
     while (card.firstChild) {
         card.removeChild(card.firstChild);
     }
     card.textContent = "Create a new board...";
-    console.log(card.textContent);
 }
 
 function createBoards() {
