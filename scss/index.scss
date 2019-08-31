@@ -70,11 +70,13 @@ html, body {
 }
 
 #boards {
-    height: 100%;
+    // height: 100%;
     width: 100%;
     display: block;
     display: grid;
     grid-template-columns: repeat(3, 400px);
+    // grid-template-rows: auto;
+    grid-row-gap: 10px;
 }
 
 input {

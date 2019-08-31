@@ -48,11 +48,11 @@ html, body {
       font-weight: lighter; }
 
 #boards {
-  height: 100%;
   width: 100%;
   display: block;
   display: grid;
-  grid-template-columns: repeat(3, 400px); }
+  grid-template-columns: repeat(3, 400px);
+  grid-row-gap: 10px; }
 
 input {
   border: none;
