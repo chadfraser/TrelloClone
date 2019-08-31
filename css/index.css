@@ -6,7 +6,7 @@ html, body {
 #main-image-icon {
   height: 80px; }
 
-.card, #card-create-new-board {
+.card, #card-create-new-board, .list {
   width: 350px;
   height: 100px;
   border: none;
@@ -26,7 +26,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center; }
-  .card:hover, #card-create-new-board:hover {
+  .card:hover, #card-create-new-board:hover, .list:hover {
     transform: scale(1.1);
     box-shadow: 2px 4px 8px gray; }
 
@@ -164,3 +164,24 @@ input {
   width: 24px;
   height: 24px;
   cursor: pointer; }
+
+.list {
+  width: 280px;
+  height: 150px;
+  font-size: 16px;
+  flex-direction: column;
+  border-radius: 0; }
+  .list:hover {
+    transform: none;
+    box-shadow: 0 2px 5px gray; }
+
+.list-sub-div {
+  height: 50%;
+  width: 100%;
+  text-align: center; }
+  .list-sub-div hr {
+    margin-top: 30px;
+    width: 90%;
+    color: white;
+    height: 1px;
+    border: 1px solid lightgrey; }
