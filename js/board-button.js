@@ -9,6 +9,11 @@ const cancelButton = document.createElement("button");
 const createButton = document.createElement("button");
 const namingText = document.createElement("h5");
 const inputBox = document.createElement("input");
+inputBox.addEventListener("keydown", function() {
+    if (event.key === "Enter" && inputBox.value !== "") {
+        createNewBoard(inputBox.value, false);
+    }
+})
 
 initializeOptionButtons();
 namingText.textContent = "What shall we call the board?"
@@ -35,7 +40,9 @@ cancelButton.addEventListener("click", function(){
     event.stopPropagation();
 });
 createButton.addEventListener("click", function() {
-    createNewBoard(inputBox.value, false);
+    if (inputBox.value !== "") {
+        createNewBoard(inputBox.value, false);
+    }
 })
 
 function initializeOptionButtons() {
@@ -82,6 +89,8 @@ function createNewBoard(title, initializingBoards) {
         savedBoardsString = (savedBoardsString === undefined) ? title :
             savedBoardsString + "," + title;
         Cookies.set("savedBoards", savedBoardsString);
+        inputBox.value = "";
+        reduceCard(createNewBoardCard);
     }
 }
 

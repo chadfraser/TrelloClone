@@ -57,8 +57,9 @@ function createNewList(title, initializingLists) {
     newListSubDiv.classList.add("list-sub-div");
 
     subDivInputBox.addEventListener("keydown", function() {
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && subDivInputBox.value !== "") {
             createNewTask(this.value, newList);
+            subDivInputBox.value = "";
         }
     });
 
@@ -78,6 +79,8 @@ function createNewList(title, initializingLists) {
 function createNewTask(title, mainDiv) {
     let newTask = document.createElement("div");
     newTask.textContent = title;
+    newTask.classList.add("task");
+
     let checkmark = document.createElement("img");
     checkmark.src = "img/iconmonstr-check-mark.png"
     newTask.appendChild(checkmark);
