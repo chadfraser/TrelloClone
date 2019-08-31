@@ -19,11 +19,15 @@
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
-  text-shadow: 0 0 3px black; }
+  text-shadow: 0 0 3px black;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
   #card-create-new-board.active {
     height: 350px;
     text-align: left;
-    padding: 0; }
+    padding: 0;
+    flex-direction: column; }
     #card-create-new-board.active hr {
       width: 100%;
       left: 0;
