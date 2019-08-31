@@ -1,5 +1,6 @@
 // window.onload = createBoards;
 const createNewBoardCard = document.getElementById("card-create-new-board");
+const boardCreationDiv = document.createElement("div");
 const optionButtons = document.createElement("div");
 const cancelButton = document.createElement("button");
 const createButton = document.createElement("button");
@@ -10,6 +11,10 @@ initializeOptionButtons();
 namingText.textContent = "What shall we call the board?"
 createNewBoardCard.addEventListener("click", toggleCard);
 
+boardCreationDiv.appendChild(namingText);
+boardCreationDiv.appendChild(inputBox);
+boardCreationDiv.appendChild(optionButtons);
+
 function initializeOptionButtons() {
     cancelButton.textContent = "CANCEL";
     cancelButton.id = "btn-cancel";
@@ -17,14 +22,15 @@ function initializeOptionButtons() {
     createButton.id = "btn-create";
     optionButtons.appendChild(cancelButton);
     optionButtons.appendChild(createButton);
+    optionButtons.id = "option-buttons";
 }
 
 function toggleCard() {
-    if (this.classList.contains("active")) {
-        reduceCard(this);
+    if (!this.classList.contains("active")) {
+        expandCard(this);
     }
     // } else {
-    //     expandCard(this);
+    //     reduceCard(this);
     // }
 }
 
@@ -33,9 +39,10 @@ function expandCard(card) {
     card.classList.add("active");
     card.appendChild(closeIcon);
     card.appendChild(document.createElement("hr"));
-    card.appendChild(namingText);
-    card.appendChild(inputBox);
-    card.appendChild(optionButtons);
+    // card.appendChild(namingText);
+    // card.appendChild(inputBox);
+    // card.appendChild(optionButtons);
+    card.appendChild(boardCreationDiv);
 }
 
 function reduceCard(card) {
