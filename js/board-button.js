@@ -1,4 +1,5 @@
 // window.onload = createBoards;
+const cardContainer = document.getElementById("boards");
 const createNewBoardCard = document.getElementById("card-create-new-board");
 const mainCardHeader = document.createElement("div"); 
 mainCardHeader.classList.add("card-header");
@@ -33,6 +34,9 @@ cancelButton.addEventListener("click", function(){
     inputBox.value = "";
     event.stopPropagation();
 });
+createButton.addEventListener("click", function() {
+    createNewBoard(inputBox.value);
+})
 
 function initializeOptionButtons() {
     cancelButton.textContent = "CANCEL";
@@ -64,6 +68,14 @@ function reduceCard(card) {
         card.removeChild(card.firstChild);
     }
     card.textContent = "Create a new board...";
+}
+
+function createNewBoard(title) {
+    let newCard = document.createElement("div");
+    newCard.classList.add("card");
+    newCard.textContent = title;
+
+    cardContainer.appendChild(newCard);
 }
 
 function createBoards() {

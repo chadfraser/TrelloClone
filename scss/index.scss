@@ -1,9 +1,14 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
 .card {
     width: 350px;
     height: 100px;
     border: none;
-    border-radius: 15px;
-    box-shadow: 2px 2px 5px lighten(black, 50);
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px lighten(black, 50);
     transform: scale(1);
     -webkit-transform: scale(1);
     transition: scale .2s ease-in-out;
@@ -13,6 +18,12 @@
     user-select: none;
     -moz-user-select: none;
     cursor: pointer;
+    color: black;
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
         // animation: scale 0.1s linear;
@@ -32,12 +43,8 @@
     @extend .card;
     background-color: mediumaquamarine;
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     text-shadow: 0 0 3px black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     &.active {
         height: 350px;
@@ -60,6 +67,14 @@
             font-weight: lighter;
         }
     }
+}
+
+#boards {
+    height: 100%;
+    width: 100%;
+    display: block;
+    display: grid;
+    grid-template-columns: repeat(3, 400px);
 }
 
 input {
