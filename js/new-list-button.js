@@ -1,4 +1,4 @@
-const lists = document.getElementById("lists");
+const listContainer = document.getElementById("lists");
 const createNewListCard = document.getElementById("card-create-list");
 const newListInputDiv = document.createElement("div");
 newListInputDiv.id = "new-list-input-div";
@@ -18,14 +18,32 @@ newListInputBox.addEventListener("focusout", showNameInsistence);
 newListInputBox.addEventListener("focusin", hideNameInsistence);
 
 function replaceNewListCard() {
-    lists.removeChild(createNewListCard);
-    lists.appendChild(newListInputDiv);
+    listContainer.removeChild(createNewListCard);
+    listContainer.appendChild(newListInputDiv);
 }
 
 function showNameInsistence() {
-    nameInsistenceText.textContent = "give me a name!"
+    if (newListInputBox.value === "") {
+        nameInsistenceText.textContent = "give me a name!"
+    }
 }
 
 function hideNameInsistence() {
     nameInsistenceText.textContent = "";
+}
+
+function createNewList(title) {
+    let newList = document.createElement("div");
+    newList.classList.add("list");
+    newList.textContent = title;
+
+    // cardContainer.appendChild(newCard);
+
+    // if (!initializingBoards) {
+    //     let savedBoardsString = Cookies.get("savedBoards");
+    //     savedBoardsString = (savedBoardsString === undefined) ? title :
+    //         savedBoardsString + "," + title;
+    //     Cookies.set("savedBoards", savedBoardsString);
+    // }
+
 }
