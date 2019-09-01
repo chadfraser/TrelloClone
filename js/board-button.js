@@ -7,7 +7,6 @@ deleteImage.addEventListener("click", function() {
         localStorage.clear();
         while (cardContainer.childNodes.length > 2) {
             cardContainer.removeChild(cardContainer.lastChild);
-            console.log(cardContainer.childNodes);
         }
     }
 });
@@ -111,16 +110,14 @@ function createNewBoard(title, initializingBoards) {
     if (!initializingBoards) {
         let savedBoardData = JSON.parse(localStorage.getItem("savedBoards"));
         if (savedBoardData === null) {
-            return;
+            savedBoardData = {
+                "boards": []
+            };
         }
-        let boards = savedBoardData.tasks === undefined ? [title] :
-            savedBoardData.tasks.push(title);
-        // let savedBoardsString = Cookies.get("savedBoards");
-        // savedBoardsString = (savedBoardsString === undefined) ? title :
-        //     savedBoardsString + "," + title;
-        // Cookies.set("savedBoards", savedBoardsString);
-        // inputBox.value = "";
-        // reduceCard(createNewBoardCard);
+        savedBoardData.boards.push({ "title": title });
+        localStorage.setItem("savedBoards", JSON.stringify({
+            "boards": savedBoardData.boards
+        }));
     }
 }
 
@@ -129,8 +126,7 @@ function createBoards() {
     if (savedBoards === null) {
         return;
     }
-    // let savedBoards = savedBoardsString.split(",");
-    savedBoards.forEach(function(e) {
-        createNewBoard(e, true);
+    savedBoards.boards.forEach(function(e) {
+        createNewBoard(e.title, true);
     });
 }
