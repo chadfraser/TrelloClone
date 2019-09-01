@@ -1,5 +1,17 @@
 window.onload = createBoards;
 
+const deleteImage = document.getElementById("main-image-icon");
+deleteImage.addEventListener("click", function() {
+    let answer = confirm("Erase all created boards and tasks?");
+    if (answer) {
+        localStorage.clear();
+        while (cardContainer.childNodes.length > 2) {
+            cardContainer.removeChild(cardContainer.lastChild);
+            console.log(cardContainer.childNodes);
+        }
+    }
+});
+
 const cardContainer = document.getElementById("boards");
 const createNewBoardCard = document.getElementById("card-create-new-board");
 const mainCardHeader = document.createElement("div"); 
@@ -14,6 +26,9 @@ const inputBox = document.createElement("input");
 inputBox.addEventListener("keydown", function() {
     if (event.key === "Enter" && inputBox.value.trim() !== "") {
         createNewBoard(inputBox.value, false);
+        inputBox.value = "";
+        reduceCard(createNewBoardCard);
+        event.stopPropagation();
     }
 })
 
@@ -44,6 +59,9 @@ cancelButton.addEventListener("click", function(){
 createButton.addEventListener("click", function() {
     if (inputBox.value.trim() !== "") {
         createNewBoard(inputBox.value, false);
+        inputBox.value = "";
+        reduceCard(createNewBoardCard);
+        event.stopPropagation();
     }
 })
 
@@ -84,23 +102,35 @@ function createNewBoard(title, initializingBoards) {
     newCard.classList.add("card");
     newCard.classList.add("grow-on-hover");
     newCard.textContent = title;
+    newCard.addEventListener("click", function() {
+        window.location = "./sample-list.html?title=" + title;
+    });
 
     cardContainer.appendChild(newCard);
 
     if (!initializingBoards) {
-        let savedBoardsString = Cookies.get("savedBoards");
-        savedBoardsString = (savedBoardsString === undefined) ? title :
-            savedBoardsString + "," + title;
-        Cookies.set("savedBoards", savedBoardsString);
-        inputBox.value = "";
-        reduceCard(createNewBoardCard);
+        let savedBoardData = JSON.parse(localStorage.getItem("savedBoards"));
+        if (savedBoardData === null) {
+            return;
+        }
+        let boards = savedBoardData.tasks === undefined ? [title] :
+            savedBoardData.tasks.push(title);
+        // let savedBoardsString = Cookies.get("savedBoards");
+        // savedBoardsString = (savedBoardsString === undefined) ? title :
+        //     savedBoardsString + "," + title;
+        // Cookies.set("savedBoards", savedBoardsString);
+        // inputBox.value = "";
+        // reduceCard(createNewBoardCard);
     }
 }
 
 function createBoards() {
-    let savedBoardsString = Cookies.get("savedBoards");
-    let savedBoardsArray = savedBoardsString.split(",");
-    savedBoardsArray.forEach(function(e) {
+    let savedBoards = JSON.parse(localStorage.getItem("savedBoards"));
+    if (savedBoards === null) {
+        return;
+    }
+    // let savedBoards = savedBoardsString.split(",");
+    savedBoards.forEach(function(e) {
         createNewBoard(e, true);
     });
 }

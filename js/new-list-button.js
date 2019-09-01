@@ -7,13 +7,14 @@ document.addEventListener("drop", function(event) {
 function setBoardTitle() {
     let url = window.location.href;
     let parameterIndex = url.indexOf("title");
-    if (parameterIndex === -1) {
-        return;
-    }
-    let boardTitle = url.substring(parameterIndex + 6);
-
     let listTitleDiv = document.getElementById("list-title");
-    listTitleDiv.textContent = boardTitle;
+
+    if (parameterIndex === -1) {
+        listTitleDiv.textContent = "Test";
+    } else {
+        let boardTitle = url.substring(parameterIndex + 6);
+        listTitleDiv.textContent = boardTitle;
+    }
 }
 
 setBoardTitle();
@@ -106,12 +107,11 @@ function createNewList(title, initializingLists) {
         dropTask(this, event);
     });
 
-    // if (!initializingLists) {
-    //     let savedBoardsString = Cookies.get("savedBoards");
-    //     savedBoardsString = (savedBoardsString === undefined) ? title :
-    //         savedBoardsString + "," + title;
-    //     Cookies.set("savedBoards", savedBoardsString);
-    // }
+    if (!initializingLists) {
+        let savedTaskData = JSON.parse(localStorage.getItem("savedTasks"));
+        let tasks = savedTaskData.tasks === undefined ? [title] :
+            savedTaskData.tasks.push(title);
+    }
 }
 
 function createNewTask(title, mainDiv) {
