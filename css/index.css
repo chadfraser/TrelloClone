@@ -191,7 +191,7 @@ input {
   top: 0;
   width: 100%;
   text-align: center;
-  margin-bottom: -5px; }
+  margin-bottom: -35px; }
   .list-sub-div hr {
     width: 90%;
     color: white;
@@ -203,9 +203,21 @@ input {
   width: auto;
   min-width: 245px;
   height: 50px;
-  margin: 15px 10px; }
-  .task .task-content {
-    min-width: 80%; }
+  margin: 15px;
+  display: flex;
+  justify-content: space-between;
+  cursor: grab; }
+  .task p {
+    margin: 0 60px; }
   .task img {
     width: 20px;
-    height: 20px; }
+    height: 20px;
+    cursor: pointer;
+    margin: 0 30px; }
+  .task.checked {
+    background-color: lavender;
+    color: grey;
+    text-decoration: line-through; }
+    .task.checked img {
+      filter: grayscale(100%);
+      opacity: 0.5; }

@@ -260,7 +260,7 @@ input {
     top: 0;
     width: 100%;
     text-align: center;
-    margin-bottom: -5px;
+    margin-bottom: -35px;
 
     hr {
         // margin-top: 30px;
@@ -277,15 +277,30 @@ input {
     width: auto;
     min-width: 245px;
     height: 50px;
-    margin: 15px 10px;
-    // margin: 0;
+    margin: 15px;
+    display: flex;
+    justify-content: space-between;
+    cursor: grab;
 
-    .task-content {
-        min-width: 80%;
+    p {
+        margin: 0 60px;
     }
     
     img {
         width: 20px;
         height: 20px;
+        cursor: pointer;
+        margin: 0 30px;
+    }
+
+    &.checked {
+        background-color: lavender;
+        color: grey;
+        text-decoration: line-through;
+
+        img {
+            filter: grayscale(100%);
+            opacity: 0.5;
+        }
     }
 }
