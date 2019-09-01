@@ -4,7 +4,22 @@ html, body {
   font-family: Arial, Helvetica, sans-serif; }
 
 #main-image-icon {
-  height: 80px; }
+  height: 80px;
+  margin-top: 10px;
+  text-align: center; }
+  #main-image-icon img {
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    text-shadow: 0px 0px 3px black;
+    transform: scale(1) rotate(0);
+    transition: all 0.1s ease-in-out;
+    transition-delay: 0.1s;
+    cursor: pointer; }
+    #main-image-icon img:hover {
+      transform: scale(1.25) rotate(10deg);
+      transition-delay: 0s;
+      filter: hue-rotate(90deg); }
 
 .card, #card-create-new-board, .list, .task {
   width: 350px;
