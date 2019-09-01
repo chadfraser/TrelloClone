@@ -4,6 +4,19 @@ document.addEventListener("dragover", function(event) {
 document.addEventListener("drop", function(event) {
     event.preventDefault();
 });
+function setBoardTitle() {
+    let url = window.location.href;
+    let parameterIndex = url.indexOf("title");
+    if (parameterIndex === -1) {
+        return;
+    }
+    let boardTitle = url.substring(parameterIndex + 6);
+
+    let listTitleDiv = document.getElementById("list-title");
+    listTitleDiv.textContent = boardTitle;
+}
+
+setBoardTitle();
 
 const listContainer = document.getElementById("lists");
 const createNewListCard = document.getElementById("card-create-list");
