@@ -228,13 +228,12 @@ input {
     @extend .card;
     width: auto;
     height: auto;
-    // top: 0;
     min-width: 280px;
     min-height: 165px;
     font-size: 16px;
-    // flex-direction: column;
     display: inline-block;
     border-radius: 0;
+    margin-bottom: 80px;
 
     input {
         margin-bottom: -100px;
@@ -263,7 +262,6 @@ input {
     margin-bottom: -35px;
 
     hr {
-        // margin-top: 30px;
         width: 90%;
         color: white;
         height: 1px;

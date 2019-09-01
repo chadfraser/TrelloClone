@@ -1,3 +1,7 @@
+document.addEventListener("dragover", function(event) {
+    event.preventDefault();
+});
+  
 const listContainer = document.getElementById("lists");
 const createNewListCard = document.getElementById("card-create-list");
 createNewListCard.classList.add("grow-on-hover");
@@ -10,6 +14,7 @@ const newListCloseIcon = document.createElement("img");
 newListCloseIcon.src = "img/iconmonstr-x-mark-aquamarine-opaque.png"
 newListCloseIcon.id = "new-list-close-icon";
 const nameInsistenceText = document.createElement("h7");
+const draggableElements = [];
 
 newListInputDiv.appendChild(newListCloseIcon);
 newListInputDiv.appendChild(newListInputBox);
@@ -71,12 +76,19 @@ function createNewList(title, initializingLists) {
             subDivInputBox.value = "";
         }
     });
+    subDivInputBox.addEventListener("drop", function() {
+        event.preventDefault();
+    });
 
     listContainer.appendChild(subcontainer);
     subcontainer.appendChild(newList);
     newList.appendChild(newListSubDiv);
 
     replaceNewListInputDiv();
+
+    newList.addEventListener("drop", function() {
+        dropTask(this, event);
+    });
 
     // if (!initializingLists) {
     //     let savedBoardsString = Cookies.get("savedBoards");
@@ -89,6 +101,7 @@ function createNewList(title, initializingLists) {
 function createNewTask(title, mainDiv) {
     let newTask = document.createElement("div");
     newTask.classList.add("task");
+    newTask.draggable = "true";
 
     let taskText = document.createElement("p");
     taskText.textContent = title;
@@ -102,14 +115,31 @@ function createNewTask(title, mainDiv) {
     newTask.appendChild(taskText);
     newTask.appendChild(checkmark);
     mainDiv.appendChild(newTask);
+
+    newTask.addEventListener("dragstart", function() {
+        dragTask(this, event);
+    });
 }
 
 function toggleCheckedTask(task) {
     if (task.classList.contains("checked")) {
         task.classList.remove("checked");
-        this.classList.remove("checked");
     } else {
         task.classList.add("checked");
-        this.classList.add("checked");
     }
+}
+
+function dragTask(element, event) {
+    let index = draggableElements.indexOf(element);
+    if (index === -1) {
+        draggableElements.push(element);
+        index = draggableElements.length - 1;
+    }
+    event.dataTransfer.setData("text", index);
+}
+
+function dropTask(target, event) {
+    event.preventDefault();
+    let element = draggableElements[event.dataTransfer.getData("text")];
+    target.appendChild(element);
 }

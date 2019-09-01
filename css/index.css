@@ -175,7 +175,8 @@ input {
   min-height: 165px;
   font-size: 16px;
   display: inline-block;
-  border-radius: 0; }
+  border-radius: 0;
+  margin-bottom: 80px; }
   .list input {
     margin-bottom: -100px; }
 
