@@ -151,13 +151,15 @@ function createNewTask(title, mainDiv, initializingTasks) {
     mainDiv.appendChild(newTask);
 
     if (!initializingTasks) {
-        let subDiv = mainDiv.getElementsByClassName("list-sub-div")[0];
-        let titleDiv = subDiv.getElementsByClassName("list-title-div")[0];
-        saveTasks(title, titleDiv.textContent);
+        let mainDivTitle = getNameOfListDiv(mainDiv);
+        saveTasks(title, mainDivTitle);
     }
 }
 
 function toggleCheckedTask(task) {
+    let mainDiv = task.parentElement;
+    let 
+
     if (task.classList.contains("checked")) {
         task.classList.remove("checked");
         // set active to false
@@ -165,6 +167,8 @@ function toggleCheckedTask(task) {
         task.classList.add("checked");
         // set active to true
     }
+
+    updateStoredCurrentTask()
 }
 
 function dragTask(element, event, mainDiv) {
@@ -183,11 +187,9 @@ function dropTask(target, event) {
     let previousDiv = elementAndPreviousDiv[1];
     target.appendChild(element);
 
-    let previousSubDiv = previousDiv.getElementsByClassName("list-sub-div")[0];
-    let previousTitleDiv = previousSubDiv.getElementsByClassName("list-title-div")[0];
-    let targetSubDiv = target.getElementsByClassName("list-sub-div")[0];
-    let targetTitleDiv = targetSubDiv.getElementsByClassName("list-title-div")[0];
-    moveTask(element.textContent, previousTitleDiv.textContent, targetTitleDiv.textContent);
+    let previousDivTitle = getNameOfListDiv(previousDiv);
+    let targetTitle = getNameOfListDiv(target);
+    moveTask(element.textContent, previousDivTitle, targetTitle);
 }
 
 function moveTask(taskName, previousListName, targetListName) {
@@ -204,8 +206,8 @@ function moveTask(taskName, previousListName, targetListName) {
     targetList.tasks.push(task);
     previousList.tasks.splice(previousTaskIndex, 1);
 
-    updateStoredCurrentList(activeBoard, activeBoardIndex, previousList, previousListIndex);
-    updateStoredCurrentList(activeBoard, activeBoardIndex, targetList, targetListIndex);
+    updateStoredCurrentList(activeBoardIndex, previousList, previousListIndex);
+    updateStoredCurrentList(activeBoardIndex, targetList, targetListIndex);
 }
 
 function saveLists(name) {
@@ -226,7 +228,7 @@ function saveTasks(taskName, listName) {
         "title": taskName,
         "active": false
     });
-    updateStoredCurrentList(activeBoard, activeBoardIndex, currentList, currentListIndex);
+    updateStoredCurrentList(activeBoardIndex, currentList, currentListIndex);
 }
 
 function createListsAndTasks() {
@@ -312,14 +314,26 @@ function getCurrentTaskFromList(currentList, taskName) {
     return activeTaskList[0];
 }
 
+function getNameOfListDiv(listDiv) {
+    let subDiv = listDiv.getElementsByClassName("list-sub-div")[0];
+    let titleDiv = subDiv.getElementsByClassName("list-title-div")[0];
+    return titleDiv.textContent;
+}
+
 function updateStoredActiveBoard(activeBoard, activeBoardIndex) {
     let savedBoards = getSavedBoardData();
     savedBoards.boards[activeBoardIndex] = activeBoard;
     localStorage.setItem("savedBoards", JSON.stringify(savedBoards));
 }
 
-function updateStoredCurrentList(activeBoard, activeBoardIndex, currentList, currentListIndex) {
+function updateStoredCurrentList(activeBoardIndex, currentList, currentListIndex) {
     let savedBoards = getSavedBoardData();
     savedBoards.boards[activeBoardIndex].lists[currentListIndex] = currentList;
+    localStorage.setItem("savedBoards", JSON.stringify(savedBoards));
+}
+
+function updateStoredCurrentTask(activeBoardIndex, currentListIndex, currentTask, currentTaskIndex) {
+    let savedBoards = getSavedBoardData();
+    savedBoards.boards[activeBoardIndex].lists[currentListIndex].tasks[currentTaskIndex] = currentTask;
     localStorage.setItem("savedBoards", JSON.stringify(savedBoards));
 }
