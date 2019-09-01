@@ -124,6 +124,7 @@ function createNewList(name, initializingLists) {
         saveLists(name);
     } else {
         moveNewListCardToEnd();
+        return newList;
     }
 }
 
@@ -137,7 +138,7 @@ function createNewTask(title, mainDiv, initializingTasks) {
     newTask.appendChild(taskText);
     newTask.appendChild(checkmark);
     newTask.addEventListener("dragstart", function() {
-        dragTask(this, event);
+        dragTask(this, event, mainDiv);
     });
     
     taskText.textContent = title
@@ -150,7 +151,6 @@ function createNewTask(title, mainDiv, initializingTasks) {
     mainDiv.appendChild(newTask);
 
     if (!initializingTasks) {
-        console.log(mainDiv.childNodes);
         let subDiv = mainDiv.getElementsByClassName("list-sub-div")[0];
         let titleDiv = subDiv.getElementsByClassName("list-title-div")[0];
         saveTasks(title, titleDiv.textContent);
@@ -160,15 +160,17 @@ function createNewTask(title, mainDiv, initializingTasks) {
 function toggleCheckedTask(task) {
     if (task.classList.contains("checked")) {
         task.classList.remove("checked");
+        // set active to false
     } else {
         task.classList.add("checked");
+        // set active to true
     }
 }
 
-function dragTask(element, event) {
+function dragTask(element, event, mainDiv) {
     let index = draggableElements.indexOf(element);
     if (index === -1) {
-        draggableElements.push(element);
+        draggableElements.push([element, mainDiv]);
         index = draggableElements.length - 1;
     }
     event.dataTransfer.setData("text", index);
@@ -176,25 +178,55 @@ function dragTask(element, event) {
 
 function dropTask(target, event) {
     event.preventDefault();
-    let element = draggableElements[event.dataTransfer.getData("text")];
+    let elementAndPreviousDiv = draggableElements[event.dataTransfer.getData("text")];
+    let element = elementAndPreviousDiv[0];
+    let previousDiv = elementAndPreviousDiv[1];
     target.appendChild(element);
+
+    let previousSubDiv = previousDiv.getElementsByClassName("list-sub-div")[0];
+    let previousTitleDiv = previousSubDiv.getElementsByClassName("list-title-div")[0];
+    let targetSubDiv = target.getElementsByClassName("list-sub-div")[0];
+    let targetTitleDiv = targetSubDiv.getElementsByClassName("list-title-div")[0];
+    moveTask(element.textContent, previousTitleDiv.textContent, targetTitleDiv.textContent);
+}
+
+function moveTask(taskName, previousListName, targetListName) {
+    let savedBoards = getSavedBoardData();
+    let activeBoard = getActiveBoardObject(savedBoards);
+    let activeBoardIndex = savedBoards.boards.indexOf(activeBoard);
+    let previousList = getCurrentListObject(activeBoard, activeBoardIndex, previousListName);
+    let previousListIndex = activeBoard.lists.indexOf(previousList);
+    let targetList = getCurrentListObject(activeBoard, activeBoardIndex, targetListName);
+    let targetListIndex = activeBoard.lists.indexOf(targetList);
+    let task = getCurrentTaskFromList(previousList, taskName);
+    let previousTaskIndex = previousList.tasks.indexOf(task);
+    
+    targetList.tasks.push(task);
+    previousList.tasks.splice(previousTaskIndex, 1);
+
+    updateStoredCurrentList(activeBoard, activeBoardIndex, previousList, previousListIndex);
+    updateStoredCurrentList(activeBoard, activeBoardIndex, targetList, targetListIndex);
 }
 
 function saveLists(name) {
     let savedBoards = getSavedBoardData();
     let activeBoard = getActiveBoardObject(savedBoards);
-    if (activeBoard.lists === undefined) {
-        activeBoard.lists = [];
-    }
-    activeBoard.lists.push({ "title": name });
     let activeBoardIndex = savedBoards.boards.indexOf(activeBoard);
-    savedBoards.boards[activeBoardIndex] = activeBoard;
-    
-    localStorage.setItem("savedBoards", JSON.stringify(savedBoards));
+    activeBoard.lists.push({ "title": name });
+    updateStoredActiveBoard(activeBoard, activeBoardIndex);
 }
 
 function saveTasks(taskName, listName) {
-    console.log(taskName, listName);
+    let savedBoards = getSavedBoardData();
+    let activeBoard = getActiveBoardObject(savedBoards);
+    let activeBoardIndex = savedBoards.boards.indexOf(activeBoard);
+    let currentList = getCurrentListObject(activeBoard, activeBoardIndex, listName);
+    let currentListIndex = activeBoard.lists.indexOf(currentList);
+    currentList.tasks.push({
+        "title": taskName,
+        "active": false
+    });
+    updateStoredCurrentList(activeBoard, activeBoardIndex, currentList, currentListIndex);
 }
 
 function createListsAndTasks() {
@@ -205,7 +237,12 @@ function createListsAndTasks() {
     }
 
     activeBoard.lists.forEach(function(e) {
-        createNewList(e.title, true);
+        let currentList = createNewList(e.title, true);
+        if (e.tasks !== undefined) {
+            e.tasks.forEach( function(e2) {
+                createNewTask(e2.title, currentList, true);
+            });
+        }
     });
 }
 
@@ -238,5 +275,51 @@ function getActiveBoardObject(savedBoards) {
     } else {
         activeBoard = activeBoardList[0];
     }
+    if (activeBoard.lists === undefined) {
+        activeBoard.lists = [];
+        let activeBoardIndex = savedBoards.boards.indexOf(activeBoard);
+        savedBoards.boards[activeBoardIndex] = activeBoard;
+        localStorage.setItem("savedBoards", JSON.stringify(savedBoards));
+    }
     return activeBoard;
+}
+
+function getCurrentListObject(activeBoard, activeBoardIndex, currentListTitle) {
+    let savedBoards = getSavedBoardData();
+    let activeListList = activeBoard.lists.filter(l => l.title === currentListTitle);
+    let currentList;
+    if (activeListList.length === 0) {
+        currentList = {
+            "title": currentListTitle,
+            "tasks": []
+        }
+        activeBoard.lists.push(currentList);
+        updateStoredActiveBoard(activeBoard, activeBoardIndex);
+    } else {
+        currentList = activeListList[0];
+    }
+    if (currentList.tasks === undefined) {
+        currentList.tasks = [];
+        let currentListIndex = savedBoards.boards.indexOf(currentList);
+        savedBoards.boards[activeBoardIndex].lists[currentListIndex] = currentList;
+        localStorage.setItem("savedBoards", JSON.stringify(savedBoards));
+    }
+    return currentList;
+}
+
+function getCurrentTaskFromList(currentList, taskName) {
+    let activeTaskList = currentList.tasks.filter(t => t.title === taskName);
+    return activeTaskList[0];
+}
+
+function updateStoredActiveBoard(activeBoard, activeBoardIndex) {
+    let savedBoards = getSavedBoardData();
+    savedBoards.boards[activeBoardIndex] = activeBoard;
+    localStorage.setItem("savedBoards", JSON.stringify(savedBoards));
+}
+
+function updateStoredCurrentList(activeBoard, activeBoardIndex, currentList, currentListIndex) {
+    let savedBoards = getSavedBoardData();
+    savedBoards.boards[activeBoardIndex].lists[currentListIndex] = currentList;
+    localStorage.setItem("savedBoards", JSON.stringify(savedBoards));
 }
