@@ -26,7 +26,7 @@ newListInputBox.addEventListener("focusin", hideNameInsistence);
 
 newListCloseIcon.addEventListener("click", replaceNewListInputDiv);
 newListInputBox.addEventListener("keydown", function() {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && this.value.trim() !== "") {
         createNewList(this.value.toUpperCase(), false);
     }
 });
@@ -43,7 +43,7 @@ function replaceNewListInputDiv() {
 }
 
 function showNameInsistence() {
-    if (newListInputBox.value === "") {
+    if (newListInputBox.value.trim() === "") {
         nameInsistenceText.textContent = "give me a name!"
     }
 }
@@ -71,7 +71,7 @@ function createNewList(title, initializingLists) {
     newListSubDiv.classList.add("list-sub-div");
 
     subDivInputBox.addEventListener("keydown", function() {
-        if (event.key === "Enter" && subDivInputBox.value !== "") {
+        if (event.key === "Enter" && subDivInputBox.value.trim() !== "") {
             createNewTask(this.value, newList);
             subDivInputBox.value = "";
         }
