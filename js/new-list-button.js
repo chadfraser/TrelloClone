@@ -46,12 +46,19 @@ function hideNameInsistence() {
 }
 
 function createNewList(title, initializingLists) {
+    let subcontainer = document.createElement("div");
+    subcontainer.classList.add("subcontainer");
+
     let newList = document.createElement("div");
-    newList.textContent = title;
     newList.classList.add("list");
+
+    let newListTitle = document.createElement("div");
+    newListTitle.textContent = title;
+    newListTitle.classList.add("list-title-div");
 
     let newListSubDiv = document.createElement("div");
     let subDivInputBox = document.createElement("input");
+    newListSubDiv.appendChild(newListTitle);
     newListSubDiv.appendChild(document.createElement("hr"));
     newListSubDiv.appendChild(subDivInputBox);
     newListSubDiv.classList.add("list-sub-div");
@@ -63,7 +70,9 @@ function createNewList(title, initializingLists) {
         }
     });
 
-    listContainer.appendChild(newList);
+    // listContainer.appendChild(newList);
+    listContainer.appendChild(subcontainer);
+    subcontainer.appendChild(newList);
     newList.appendChild(newListSubDiv);
 
     replaceNewListInputDiv();
