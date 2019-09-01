@@ -1,8 +1,10 @@
 window.onload = createBoards;
+
 const cardContainer = document.getElementById("boards");
 const createNewBoardCard = document.getElementById("card-create-new-board");
 const mainCardHeader = document.createElement("div"); 
 mainCardHeader.classList.add("card-header");
+
 const boardCreationDiv = document.createElement("div");
 const optionButtons = document.createElement("div");
 const cancelButton = document.createElement("button");
@@ -10,7 +12,7 @@ const createButton = document.createElement("button");
 const namingText = document.createElement("h5");
 const inputBox = document.createElement("input");
 inputBox.addEventListener("keydown", function() {
-    if (event.key === "Enter" && inputBox.value !== "") {
+    if (event.key === "Enter" && inputBox.value.trim() !== "") {
         createNewBoard(inputBox.value, false);
     }
 })
@@ -40,7 +42,7 @@ cancelButton.addEventListener("click", function(){
     event.stopPropagation();
 });
 createButton.addEventListener("click", function() {
-    if (inputBox.value !== "") {
+    if (inputBox.value.trim() !== "") {
         createNewBoard(inputBox.value, false);
     }
 })
@@ -80,6 +82,7 @@ function reduceCard(card) {
 function createNewBoard(title, initializingBoards) {
     let newCard = document.createElement("div");
     newCard.classList.add("card");
+    newCard.classList.add("grow-on-hover");
     newCard.textContent = title;
 
     cardContainer.appendChild(newCard);
@@ -100,5 +103,4 @@ function createBoards() {
     savedBoardsArray.forEach(function(e) {
         createNewBoard(e, true);
     });
-    console.log(savedBoardsString, savedBoardsArray);
 }

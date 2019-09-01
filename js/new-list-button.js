@@ -1,5 +1,7 @@
 const listContainer = document.getElementById("lists");
 const createNewListCard = document.getElementById("card-create-list");
+createNewListCard.classList.add("grow-on-hover");
+
 const newListInputDiv = document.createElement("div");
 newListInputDiv.id = "new-list-input-div";
 const newListInputBox = document.createElement("input");
