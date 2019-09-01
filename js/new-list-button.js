@@ -45,7 +45,7 @@ function initializeEventListeners() {
 }
 
 function setBoardTitle() {
-    let url = window.location.href;
+    let url = decodeURI(window.location.href);
     let parameterIndex = url.indexOf("title");
 
     if (parameterIndex === -1) {
