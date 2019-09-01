@@ -1,7 +1,10 @@
 document.addEventListener("dragover", function(event) {
     event.preventDefault();
 });
-  
+document.addEventListener("drop", function(event) {
+    event.preventDefault();
+});
+
 const listContainer = document.getElementById("lists");
 const createNewListCard = document.getElementById("card-create-list");
 createNewListCard.classList.add("grow-on-hover");
