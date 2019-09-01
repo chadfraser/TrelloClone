@@ -128,7 +128,7 @@ function createNewList(name, initializingLists) {
     }
 }
 
-function createNewTask(title, mainDiv, initializingTasks) {
+function createNewTask(title, mainDiv, initializingTasks, taskObject) {
     let newTask = document.createElement("div");
     let taskText = document.createElement("p");;
     let checkmark = document.createElement("img");
@@ -153,22 +153,33 @@ function createNewTask(title, mainDiv, initializingTasks) {
     if (!initializingTasks) {
         let mainDivTitle = getNameOfListDiv(mainDiv);
         saveTasks(title, mainDivTitle);
+    } else if (taskObject.active === false) {
+        newTask.classList.add("checked");
     }
 }
 
 function toggleCheckedTask(task) {
-    let mainDiv = task.parentElement;
-    let 
+    let listDiv = task.parentElement;
+    let listDivTitle = getNameOfListDiv(listDiv);
+    
+    let savedBoards = getSavedBoardData();
+    let activeBoard = getActiveBoardObject(savedBoards);
+    let activeBoardIndex = savedBoards.boards.indexOf(activeBoard);
+    let currentList = getCurrentListObject(activeBoard, activeBoardIndex, listDivTitle);
+    let currentListIndex = activeBoard.lists.indexOf(currentList);
+    let currentTask = getCurrentTaskFromList(currentList, task.textContent);
+    let currentTaskIndex = currentList.tasks.indexOf(currentTask);
 
     if (task.classList.contains("checked")) {
         task.classList.remove("checked");
-        // set active to false
+        currentTask.active = true;
     } else {
         task.classList.add("checked");
-        // set active to true
+        currentTask.active = false;
     }
 
-    updateStoredCurrentTask()
+    console.log(currentTask, currentTaskIndex);
+    updateStoredCurrentTask(activeBoardIndex, currentListIndex, currentTask, currentTaskIndex);
 }
 
 function dragTask(element, event, mainDiv) {
@@ -226,7 +237,7 @@ function saveTasks(taskName, listName) {
     let currentListIndex = activeBoard.lists.indexOf(currentList);
     currentList.tasks.push({
         "title": taskName,
-        "active": false
+        "active": true
     });
     updateStoredCurrentList(activeBoardIndex, currentList, currentListIndex);
 }
@@ -242,7 +253,7 @@ function createListsAndTasks() {
         let currentList = createNewList(e.title, true);
         if (e.tasks !== undefined) {
             e.tasks.forEach( function(e2) {
-                createNewTask(e2.title, currentList, true);
+                createNewTask(e2.title, currentList, true, e2);
             });
         }
     });
